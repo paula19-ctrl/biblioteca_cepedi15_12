@@ -1,0 +1,156 @@
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+    /* Tema claro (padrão) */
+    body {
+        background-color: white;
+        color: black;
+        transition: 0.3s;
+    }
+
+    /* Tema escuro */
+    body.dark {
+        background-color: #121212;
+        color: white;
+    }
+
+    body.dark .card {
+        background-color: #1e1e1e;
+        color: white;
+    }
+
+/* cor das letras */
+    body.dark table {
+        color: #4da378;
+    }
+
+/* cor do q ta no titulo */
+    body.dark thead {
+        background-color: #1a4d1a !important;
+        color: white !important;
+    }
+
+/* cor das faixas entre cada coiso */
+  body.dark .table-striped tbody tr:nth-of-type(even) {
+        background-color: #383b39; /* cinza 2 */
+    }
+
+/* cor de link */
+body.dark a {
+    color: #4da378;
+    text-decoration: none;
+}
+
+body.dark a i.fa-search {
+    color: #8cff8c !important; /* verde claro no escuro */
+}
+
+    body.dark .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #1c1c1c;
+    }
+
+
+
+    /* Botão do tema */
+    .tema-btn {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 1000;
+    }
+</style>
+
+<body>
+
+<button class="btn btn-dark tema-btn" onclick="mudarTema()">
+    Alternar Tema
+</button>
+
+<script>
+    function mudarTema() {
+        document.body.classList.toggle("dark");
+
+        // Salvar preferência
+        if (document.body.classList.contains("dark")) {
+            localStorage.setItem("tema", "dark");
+        } else {
+            localStorage.setItem("tema", "light");
+        }
+    }
+
+    // Carregar tema salvo
+    if (localStorage.getItem("tema") === "dark") {
+        document.body.classList.add("dark");
+    }
+</script>
+
+
+    <div class="row">
+        <div class="col-12">
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2><i class="fa fa-list"> Listagem de emprestimos</i></h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>aluno</th>
+                            <th>livro</th>
+                            <th>data_emprestimo</th>
+                            <th>data_devolucao</th>
+                            <th>data_prevista_devolucao</th>
+                            <th>status</th>
+                            <th>Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for e in emprestimos %}
+                        <tr>
+                            <td>{{ e.aluno_id.pk }}</td>
+                            <td><a href="#">{{ e.livro_id.upper }}</a></td>
+                            <td>{{ e.data_emprestimo | date:'d/m/Y'}}</td>
+                            <td>{{ e.data_devolucao }}</td>
+                            <td>{{ e.data_prevista_devolucao | date:'d/m/Y'}}</td>
+                            <td>{{ e.status  }}</td>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-search" aria-hidden="true" style="color: blue;"></i>
+                                </a>
+                                <a href="{% url 'emprestimos:editar_emprestimo' e.id %}">
+                                    <i class="fa fa-pencil-square" aria-hidden="true" style="color: #6B8E23;"></i>
+                                </a>
+                                <a href="{% url 'emprestimos:excluir_emprestimo' e.id %}">
+                                    <i class="fa fa-trash" aria-hidden="true" style="color: red;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 card mb-3">
+        <div class="card-header">
+            <a href="{% url 'emprestimos:inserir_emprestimo' %}"><button class="btn btn-success">Cadastrar</button></a>
+        </div>
+    </div>
+</body>
+</html>

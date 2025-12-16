@@ -16,7 +16,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h2><i class="fa fa-users"></i> Cadastro de Alunos</h2>
+            <h2><i class="fa fa-users"></i> Cadastro de Livros</h2>
         </div>
         <div class="card-body">
             <form method="post" enctype="multipart/form-data">
@@ -25,14 +25,14 @@
                     <div class="p-1 mb-2 bg-light text-dark">
                         <div class="form-row">
                             <div class="col-md-8">
-                                {{ form.nome.errors }}
-                                <label><strong>Nome: </strong></label>
-                                {{ form.nome|add_class:"form-control" }}
+                                {{ form.titulo.errors }}
+                                <label><strong>Titulo: </strong></label>
+                                {{ form.titulo |add_class:'form-control' }}
                             </div>
                             <div class="col-md-4">
-                                {{ form.matricula.errors }}
-                                <label><strong>Matrícula: </strong></label>
-                                {{ form.matricula|add_class:'form-control' }}
+                                {{ form.autor.errors }}
+                                <label><strong>Autor: </strong></label>
+                                {{ form.autor |add_class:'form-control' }}
                             </div>
                         </div>
                     </div>
@@ -42,23 +42,36 @@
                     <div class="p-1 mb-2 bg-light text-dark">
                         <div class="form-row">
                             <div class="col-md-8">
-                                {{ form.email.errors }}
-                                <label><strong>Email:</strong></label>
-                                {{ form.email|add_class:'form-control' }}
+                                {{ form.editora.errors }}
+                                <label><strong>Editora:</strong></label>
+                                {{ form.editora |add_class:'form-control' }}
                             </div>
-                            <div class="col-md-4 mb-0">
-                                {{ form.telefone.errors }}
-                                <label><strong>Telefone:</strong></label>
-                                {{ form.telefone|add_class:'form-control'  }}
+                            <div class="col-md-4">
+                                {{ form.edicao.errors }}
+                                <label><strong>Edição:</strong></label>
+                                {{ form.edicao |add_class:'form-control'  }}
                             </div>
                             <div class="col-md-2">
-                                {{ form.data_evento.erros }}
-                                <label><strong>Data do Cadastro/Atualização:</strong></label>
-                                {{ form.data_evento|add_class:'form-control' }}
+                                {{ form.ano_publicacao.erros }}
+                                <label><strong>Data de Publicação:</strong></label>
+                                {{ form.ano_publicacao |add_class:'form-control' }}
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="container">
+                    <div class="p-1 mb-2 bg-light text-dark">
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                {{ form.isbn.erros }}
+                                <label><strong>ISBN:</strong></label>
+                                {{ form.isbn  |add_class:'form-control' }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form.numero_paginas.erros }}
+                                <label><strong>Páginas:</strong></label>
+                                {{ form.numero_paginas |add_class:'form-control' }}
+                            </div>
                 <br>
                 <div class="container">
                     <div class="p-1 mb-2 bg-light text-dark">

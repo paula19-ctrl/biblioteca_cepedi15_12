@@ -34,23 +34,23 @@
 
 /* cor das letras */
     body.dark table {
-        color: #4da378;
+        color: #80ed58;
     }
 
 /* cor do q ta no titulo */
     body.dark thead {
-        background-color: #1a4d1a !important;
-        color: white !important;
+        background-color: #36c998 !important;
+        color: black !important;
     }
 
 /* cor das faixas entre cada coiso */
   body.dark .table-striped tbody tr:nth-of-type(even) {
-        background-color: #383b39; /* cinza 2 */
+        background-color: #232024; /* cinza 2 */
     }
 
 /* cor de link */
 body.dark a {
-    color: #4da378;
+    color: #db1828;
     text-decoration: none;
 }
 
@@ -121,10 +121,11 @@ body.dark a i.fa-search {
                         </tr>
                     </thead>
                     <tbody>
-                    {% for e in emprestimos %}
+                    {% for e in relacao_emprestimos %}
                         <tr>
-                            <td>{{ e.aluno_id.pk }}</td>
-                            <td><a href="#">{{ e.livro_id.upper }}</a></td>
+                            <td>{{ e.id }}</td>
+                            <td>{{ e.aluno_id }}</td>
+                            <td><a href="#">{{ e.livro_id | upper }}</a></td>
                             <td>{{ e.data_emprestimo | date:'d/m/Y'}}</td>
                             <td>{{ e.data_devolucao }}</td>
                             <td>{{ e.data_prevista_devolucao | date:'d/m/Y'}}</td>

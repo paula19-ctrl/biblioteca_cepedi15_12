@@ -111,6 +111,7 @@ body.dark a i.fa-search {
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>id</th>
                             <th>aluno</th>
                             <th>livro</th>
                             <th>data_emprestimo</th>
@@ -128,8 +129,16 @@ body.dark a i.fa-search {
                             <td><a href="#">{{ e.livro_id | upper }}</a></td>
                             <td>{{ e.data_emprestimo | date:'d/m/Y'}}</td>
                             <td>{{ e.data_devolucao }}</td>
-                            <td>{{ e.data_prevista_devolucao | date:'d/m/Y'}}</td>
-                            <td>{{ e.status  }}</td>
+                            <td>{{ e.data_prevista_devolucao}}</td>
+                            <td>
+                                {% if e.status == 'E' %}
+                                    <span style="color: red; font-weight: bold;">{{ e.get_status_display }}</span>
+                                {% elif e.status == 'D' %}
+                                    <span style="color: green; font-weight: bold;">{{ e.get_status_display }}</span>
+                                {% else %}
+                                    {{ e.get_status_display }}
+                                {% endif %}
+                            </td>
                             <td>
                                 <a href="#">
                                     <i class="fa fa-search" aria-hidden="true" style="color: blue;"></i>

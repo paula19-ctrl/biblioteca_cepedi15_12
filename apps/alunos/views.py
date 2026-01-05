@@ -20,35 +20,33 @@ def inserir_aluno(request):
     return render(request, template_name, context)
 
 def listar_alunos(request):
-    template_name = 'alunos/listar_alunos.html'
+    ordens = {
+        'nome_asc': Lower('nome'),
+        'nome_desc': Lower('nome').desc(),
 
-    ordem = request.GET.get('ordem', 'nome_asc')  # padrão
+        'id_asc': 'id',
+        'id_desc': '-id',
 
-    if ordem == 'nome_asc':
-        alunos = Aluno.objects.all().order_by(Lower('nome'))
-    elif ordem == 'nome_desc':
-        alunos = Aluno.objects.all().order_by(Lower('nome').desc())
-    elif ordem == 'id_asc':
-        alunos = Aluno.objects.all().order_by('id')
-    elif ordem == 'id_desc':
-        alunos = Aluno.objects.all().order_by('-id')
-    elif ordem == 'matricula_asc':
-        alunos = Aluno.objects.all().order_by('matricula')
-    elif ordem == 'matricula_desc':
-        alunos = Aluno.objects.all().order_by('-matricula')
-    elif ordem == 'data_evento_asc':
-        alunos = Aluno.objects.all().order_by('data_evento')
-    elif ordem == 'data_evento_desc':
-        alunos = Aluno.objects.all().order_by('-data_evento')
+        'matricula_asc': 'matricula',
+        'matricula_desc': '-matricula',
 
-    else:
-        alunos = Aluno.objects.all().order_by(Lower('nome'))  # fallback
+        'data_evento_asc': 'data_evento',
+        'data_evento_desc': '-data_evento',
+    }
 
-    context = {
+    ordem = request.GET.get('ordem', 'nome_asc')
+    ordem_db = ordens.get(ordem, Lower('nome'))
+
+    alunos = (
+        Aluno.objects
+        .all()
+        .order_by(ordem_db)
+    )
+
+    return render(request, 'alunos/listar_alunos.html', {
         'alunos': alunos,
         'ordem': ordem,
-    }
-    return render(request, template_name, context)
+    })
 
 def editar_alunos(request, id):
     template_name = 'alunos/form_aluno.html'

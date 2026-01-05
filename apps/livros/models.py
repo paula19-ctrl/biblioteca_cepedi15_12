@@ -8,6 +8,7 @@ class Livro(models.Model):
     ano_publicacao = models.DateField(blank=False, null=False)
     isbn = models.CharField(max_length=14)
     numero_paginas = models.IntegerField(blank=False, null=False)
+    foto = models.ImageField(upload_to='fotos_livros/', blank=True, null=True)
 
 
     def __str__(self):

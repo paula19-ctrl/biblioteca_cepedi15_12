@@ -18,31 +18,30 @@ def inserir_livro(request):
     return render(request, template_name, context)
 
 def listar_livros(request):
-    template_name = 'livros/listar_livros.html'
+    ordens = {
+        'titulo_asc': Lower('titulo'),
+        'titulo_desc': Lower('titulo').desc(),
 
-    ordem = request.GET.get('ordem', 'titulo_asc')  # padrão
+        'autor_asc': Lower('autor'),
+        'autor_desc': Lower('autor').desc(),
 
-    if ordem == 'titulo_asc':
-        livros = Livro.objects.all().order_by(Lower('titulo'))
-    elif ordem == 'titulo_desc':
-        livros = Livro.objects.all().order_by(Lower('titulo').desc())
-    elif ordem == 'autor_asc':
-        livros = Livro.objects.all().order_by(Lower('autor'))
-    elif ordem == 'autor_desc':
-        livros = Livro.objects.all().order_by(Lower('autor').desc())
-    elif ordem == 'editora_asc':
-        livros = Livro.objects.all().order_by(Lower('editora'))
-    elif ordem == 'editora_desc':
-        livros = Livro.objects.all().order_by(Lower('editora').desc())
+        'editora_asc': Lower('editora'),
+        'editora_desc': Lower('editora').desc(),
+    }
 
-    else:
-        livros = Livro.objects.all().order_by(Lower('titulo'))  # fallback
+    ordem = request.GET.get('ordem', 'titulo_asc')
+    ordem_db = ordens.get(ordem, Lower('titulo'))
 
-    context = {
+    livros = (
+        Livro.objects
+        .all()
+        .order_by(ordem_db)
+    )
+
+    return render(request, 'livros/listar_livros.html', {
         'livros': livros,
         'ordem': ordem,
-    }
-    return render(request, template_name, context)
+    })
 
 
 def editar_livro(request, id):

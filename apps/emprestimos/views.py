@@ -4,6 +4,7 @@ from django.db.models.functions import Lower
 from .forms import EmprestimoForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Emprestimo
+from .models import Aluno
 
 
 def inserir_emprestimo(request):
@@ -19,10 +20,30 @@ def inserir_emprestimo(request):
     return render(request, template_name, context)
 
 def listar_emprestimos(request):
-    template_name = 'emprestimos/listar_emprestimos.html'
-    emprestimos = Emprestimo.objects.all()
-    context = {'relacao_emprestimos': emprestimos}
-    return render(request, template_name, context)
+    ordens = {
+        'id_asc': 'id',
+        'id_desc': '-id',
+
+        'aluno_asc': Lower('aluno_id__nome'),
+        'aluno_desc': Lower('aluno_id__nome').desc(),
+
+        'livro_asc': Lower('livro_id__titulo'),
+        'livro_desc': Lower('livro_id__titulo').desc(),
+    }
+
+    ordem = request.GET.get('ordem', 'id_asc')
+    ordem_db = ordens.get(ordem, 'id')
+
+    emprestimos = (
+        Emprestimo.objects
+        .select_related('aluno_id', 'livro_id')
+        .order_by(ordem_db)
+    )
+
+    return render(request, 'emprestimos/listar_emprestimos.html', {
+        'emprestimos': emprestimos,
+        'ordem': ordem,
+    })
 
 def editar_emprestimo(request, id):
     template_name = 'emprestimos/form_emprestimo.html'
@@ -43,4 +64,15 @@ def excluir_emprestimo(request, id):
         emprestimo.delete()
         messages.error(request, 'O Emprestimo foi excluído com sucesso.')
         return redirect('emprestimos:listar_emprestimos')
+    return render(request, template_name, context)
+
+def aluno_emprestimo(request, id):
+    template_name = 'emprestimos/aluno_emprestimo.html'
+    aluno = Aluno.objects.get(id=id)
+    emprestimos = Emprestimo.objects.filter(aluno_id=id)
+    context = {
+        'aluno': aluno,
+        'emprestimos': emprestimos,
+        'aluno_id': id,
+    }
     return render(request, template_name, context)

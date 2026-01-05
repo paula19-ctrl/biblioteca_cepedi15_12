@@ -1,0 +1,241 @@
+.titulo-livro {
+    max-width: 300px;        /* OBRIGATÓRIO */
+    white-space: nowrap;    /* força 1 linha */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toast-container-custom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-custom {
+    min-width: 280px;
+    max-width: 360px;
+    padding: 12px 16px;
+    border-radius: 10px;
+}
+
+/* Efeito na Capa do Livro */
+img[data-bs-toggle="modal"] {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    cursor: zoom-in;
+}
+
+img[data-bs-toggle="modal"]:hover {
+    filter: brightness(0.8);
+    transform: scale(1.1);
+}
+
+/* Estilo para quando não há foto */
+.sem-capa {
+    width: 50px;
+    height: 75px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #6c757d;
+    border-radius: 4px;
+    border: 1px dashed #dee2e6;
+}
+body.dark .sem-capa {
+    background-color: #333;
+    color: #aaa;
+    border-color: #555;
+}
+
+/* Área de Paste/Upload */
+#paste-area {
+    transition: all 0.3s;
+}
+
+body.dark #paste-area {
+    background-color: #252525 !important;
+    border-color: #444 !important;
+    color: #ccc;
+}
+/* Tema padrão */
+/* cor do fundo real */
+body {
+    background-color: white;
+    color: #d8dee9;
+    transition: 0.3s;
+
+}
+/* cor de fundo e titulo */
+.card {
+    background-color: #f6f6f6;
+    color: #131313;
+}
+body .table {
+    --bs-table-bg: #ffffff;
+    --bs-table-color: #212529;
+
+    --bs-table-striped-bg: #eaeaea;
+    --bs-table-striped-color: #212529;
+
+    --bs-border-color: #dee2e6;
+}
+
+
+/* cor botao voltar */
+/*  .btn-primary {background-color: red;}   */
+
+a {text-decoration: none; color: inherit;}
+
+a:hover {
+
+    text-decoration-line: underline;
+    text-decoration-color: #131313;
+    text-decoration-thickness: 2px;
+}
+.card-button {
+  position: relative;
+}
+.tema-btn {
+    position: absolute;
+    top: -40px;
+    right: 15px;
+    z-index: 9999;
+}
+
+.tema-btn {
+
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+
+}
+/* cor botao biblioteca */
+.menu-btn {
+
+    background-color: #bfbfbf;
+    color: #131313;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    btn-hover-color: #131313;
+
+}
+
+/* cor botao voltar */
+.btn.btn-primary {
+  --bs-btn-bg: #121212;
+  --bs-btn-border-color: #8c8c8c;
+  --bs-btn-color: #fff;
+
+  --bs-btn-hover-bg: #1f1f1f;
+  --bs-btn-hover-border-color: #8c8c8c;
+  --bs-btn-hover-color: #fff;
+
+  --bs-btn-active-bg: #121212;
+  --bs-btn-active-border-color: #8c8c8c;
+}
+/* cor botao cadastro */
+.btn.btn-success {
+  --bs-btn-bg: #121212;
+  --bs-btn-border-color: #8c8c8c;
+  --bs-btn-color: #fff;
+
+  --bs-btn-hover-bg: #1f1f1f;
+  --bs-btn-hover-border-color: #8c8c8c;
+  --bs-btn-hover-color: #fff;
+
+  --bs-btn-active-bg: #121212;
+  --bs-btn-active-border-color: #8c8c8c;
+}
+
+/* cor do form livro */
+.form-box {
+    background-color: #eaeaea;
+    border-color: #444;
+    border-radius: .25rem;
+}
+
+
+
+/* Tema dark */
+body.dark {
+    background-color: #121212;
+    color: white;
+    transition: 0.3s;
+}
+
+body.dark .card {
+    background-color: #1e1e1e;
+    color: #e5e9f0;
+}
+
+/* cor da tabela */
+body.dark .table {
+    --bs-table-color: #80ed58;
+    --bs-border-color: #2f2f2;
+    --bs-table-bg: #131313;
+    /* cor das faixas entre cada coiso */
+    --bs-table-striped-bg: #232024;
+    --bs-table-striped-color: #80ed58;
+
+    --bs-table-hover-bg: #333;
+    --bs-table-hover-color: #80ed58;
+}
+
+/* cor do q ta no titulo */
+body.dark .table > thead {
+    --bs-table-bg: #36c998;
+    --bs-table-color: black;
+}
+
+/* cor do form (cadastro) */
+body.dark .form-box {
+    background-color: #2a2a2a;
+    color: #4da378;
+    border-radius: .25rem;
+}
+body.dark .form-control {
+    background-color: #3e3e3e;
+    border-color: #80ed58;
+    color: #a7cfbb;
+}
+body.dark .form-control:focus {
+    background-color: #2a2a2a;
+    color: #a7cfbb;
+    border-color: #80ed58;
+    box-shadow: 0 0 0 .15rem #4da37855 ;
+}
+
+/* cor botao tema */
+body.dark .tema-btn {
+    background-color: #cdcdcd;
+    color: black;
+}
+
+/* cor site excluir */
+body.dark.pagina-excluir h5,
+body.dark.pagina-excluir .card-title {
+    color: #80ed58;
+    background-color: #1e1e1e;
+}
+/* cor de link */
+body.dark .table a:hover {
+    text-decoration-line: underline;
+    text-decoration-color: #db1828;
+    text-decoration-thickness: 2px;
+}
+
+body.dark td a {
+    text-decoration: none;
+    color: #db1828;
+}
+
+/* cor da lupinha */
+body.dark a i.fa-search {
+    color: #8cff8c !important; /* verde claro no escuro */
+}

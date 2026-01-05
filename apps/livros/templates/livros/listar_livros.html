@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -8,10 +8,29 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+
+<script>
+function mudarTema() {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("tema", "dark");
+    } else {
+        localStorage.setItem("tema", "light");
+    }
+}
+
+/* Aplicar tema salvo ao carregar a página */
+if (localStorage.getItem("tema") === "dark") {
+    document.body.classList.add("dark");
+}
+</script>
+
     <div class="row">
         <div class="col-12">
         </div>
@@ -19,11 +38,15 @@
     <div class="card mb-3">
         <div class="card-header">
             <h2><i class="fa fa-list"> Listagem de livros</i></h2>
+            <div class="card-button">
+            <!-- Botão de alternar tema -->
+                <button class="tema-btn" onclick="mudarTema()">Alternar Tema</button>
+            </div>
         </div>
         <div class="card-body">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
            <div class="mb-3">
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="ordenarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,6 +72,7 @@
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Capa</th>
                             <th>Titulo</th>
                             <th>Autor</th>
                             <th>Edicao</th>
@@ -63,7 +87,23 @@
                     {% for l in livros %}
                         <tr>
                             <td>{{ l.id }}</td>
-                            <td><a href="#">{{ l.titulo.upper }}</a></td>
+                            <td>
+                            {% if l.foto %}
+                                <img src="{{ l.foto.url }}"
+                                     style="width: 50px; height: 75px; object-fit: cover; border-radius: 4px; cursor: zoom-in;"
+                                     data-bs-toggle="modal"
+                                     data-bs-target="#fotoModal"
+                                     data-bs-titulo="{{ l.titulo }}"
+                                     data-bs-url="{{ l.foto.url }}"
+                                     onclick="ampliarFoto(this)">
+                            {% else %}
+                            <div class="sem-capa">Sem Capa</div>
+                            {% endif %}
+
+                            </td>
+                            <td><a href="#" class="link-titulo">
+                                    <div class="titulo-livro" title="{{ l.titulo }}">
+                                        {{ l.titulo|upper }}
                             <td>{{ l.autor }}</td>
                             <td>{{ l.edicao }}</td>
                             <td>{{ l.editora }}</td>
@@ -94,5 +134,40 @@
             <a href="{% url 'index' %}"><button class="btn btn-primary">Voltar</button></a>
         </div>
     </div>
+</div>
+<div class="modal fade" id="fotoModal" tabindex="-1" aria-labelledby="fotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nomeLivroModal">Capa do Livro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="" id="imagemModal" class="img-fluid rounded" alt="Capa ampliada">
+      </div>
+    </div>
+  </div>
+ </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function mudarTema() {
+            document.body.classList.toggle("dark");
+            localStorage.setItem("tema", document.body.classList.contains("dark") ? "dark" : "light");
+        }
+
+        // Isso garante que se ele mudar o tema na exclusão, a lista também mude
+        if (localStorage.getItem("tema") === "dark") {
+            document.body.classList.add("dark");
+        }
+
+        function ampliarFoto(elemento) {
+            const titulo = elemento.getAttribute('data-bs-titulo');
+            const url = elemento.getAttribute('data-bs-url');
+            document.getElementById('nomeLivroModal').innerText = titulo;
+            document.getElementById('imagemModal').src = url;
+        }
+   </script>
 </body>
 </html>

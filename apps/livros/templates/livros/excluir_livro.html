@@ -1,15 +1,41 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
-<body>
+<body class="pagina-excluir">
+
+<script>
+function mudarTema() {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("tema", "dark");
+    } else {
+        localStorage.setItem("tema", "light");
+    }
+}
+
+/* Aplicar tema salvo ao carregar a página */
+if (localStorage.getItem("tema") === "dark") {
+    document.body.classList.add("dark");
+}
+</script>
+
+
 <div class="card">
     <div class="card-header">
-        Tem certeza que deseja remover o livro abaixo?
+       <h2> Tem certeza que deseja remover o livro abaixo?</h2>
+        <div class="card-button">
+            <!-- Botão de alternar tema -->
+                <button class="tema-btn" onclick="mudarTema()">Alternar Tema</button>
+            </div>
     </div>
     <div class="card-body">
         <h5 class="card-title">Id: {{livro.id}}</h5>

@@ -1,102 +1,64 @@
-{% load crispy_forms_tags %}
 {% load static %}
 {% load widget_tweaks %}
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cadastro de Livros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
+
 <body>
-<script>
-function mudarTema() {
-    document.body.classList.toggle("dark");
-
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("tema", "dark");
-    } else {
-        localStorage.setItem("tema", "light");
-    }
-}
-
-/* Aplicar tema salvo ao carregar a página */
-if (localStorage.getItem("tema") === "dark") {
-    document.body.classList.add("dark");
-}
-</script>
 
 
-    <div class="row">
-        <div class="col-12"></div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h2><i class="fa fa-users"></i> Cadastro de Livros</h2>
-            <div class="card-button">
-            <!-- Botão de alternar tema -->
-                <button class="tema-btn" onclick="mudarTema()">Alternar Tema</button>
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2><i class="fa fa-book"></i> Cadastro de Livros</h2>
             </div>
-        </div>
-        <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                {{ form.titulo.errors }}
-                                <label><strong>Titulo: </strong></label>
-                                {{ form.titulo |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-4">
-                                {{ form.autor.errors }}
-                                <label><strong>Autor: </strong></label>
-                                {{ form.autor |add_class:'form-control' }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                {{ form.editora.errors }}
-                                <label><strong>Editora:</strong></label>
-                                {{ form.editora |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-4">
-                                {{ form.edicao.errors }}
-                                <label><strong>Edição:</strong></label>
-                                {{ form.edicao |add_class:'form-control'  }}
-                            </div>
-                            <div class="col-md-2">
-                                {{ form.ano_publicacao.erros }}
-                                <label><strong>Data de Publicação:</strong></label>
-                                {{ form.ano_publicacao |add_class:'form-control' }}
-                            </div>
+                    <div class="form-row mb-3">
+                        <div class="col-md-7">
+                            <label><strong>Título:</strong></label>
+                            {{ form.titulo | add_class:"form-control" }}
+                            <small class="text-danger">{{ form.titulo.errors }}</small>
+                        </div>
+                        <div class="col-md-4">
+                            <label><strong>Autor:</strong></label>
+                            {{ form.autor | add_class:'form-control' }}
+                            <small class="text-danger">{{ form.autor.errors }}</small>
+                        </div>
+                        <div class="col-md-1">
+                            <label><strong>Edição:</strong></label>
+                            {{ form.edicao | add_class:'form-control' }}
                         </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-3">
-                                {{ form.isbn.erros }}
-                                <label><strong>ISBN:</strong></label>
-                                {{ form.isbn  |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-2">
-                                {{ form.numero_paginas.erros }}
-                                <label><strong>Páginas:</strong></label>
-                                {{ form.numero_paginas |add_class:'form-control' }}
-                            </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col-md-4">
+                            <label><strong>Editora:</strong></label>
+                            {{ form.editora | add_class:'form-control' }}
                         </div>
+                        <div class="col-md-3">
+                            <label><strong>Data da Publicação:</strong></label>
+                            {{ form.ano_publicacao | add_class:'form-control' | attr:"type:date" }}
+                        </div>
+                        <div class="col-md-3">
+                            <label><strong>ISBN:</strong></label>
+                            {{ form.isbn | add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-2">
+                            <label><strong>Páginas:</strong></label>
+                            {{ form.numero_paginas | add_class:'form-control' }}
+                        </div>
+                    </div>
 
 <div class="container">
     <div class="p-3 mb-3 bg-light text-dark rounded border">
@@ -127,20 +89,24 @@ if (localStorage.getItem("tema") === "dark") {
         <small class="text-muted">Formatos: JPG ou PNG. Você pode copiar imagens direto da internet.</small>
     </div>
 </div>
-                <br>
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-12">
-                               <button type="submit" class="btn btn-success">Salvar</button>
-                               <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-primary">Voltar</button></a>
-                            </div>
-                        </div>
+
+
+
+                    <div class="form-group border-top pt-3">
+                        <button type="submit" class="btn btn-success px-4">Salvar Livro</button>
+                        <a href="{% url 'livros:listar_livros' %}" class="btn btn-secondary">Voltar</a>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
+    <script>
+        if (localStorage.getItem("tema") === "dark") {
+            document.body.classList.add("dark");
+        }
+    </script>
+
 <script>
 const fileInput = document.getElementById('id_foto');
 const pasteArea = document.getElementById('paste-area');
@@ -211,7 +177,6 @@ function limparCapa(event) {
     pasteMsg.classList.remove('d-none');
 }
 </script>
-
 
 </body>
 </html>

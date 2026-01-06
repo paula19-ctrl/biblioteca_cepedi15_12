@@ -107,7 +107,7 @@ if (localStorage.getItem("tema") === "dark") {
                             <td>{{ l.autor }}</td>
                             <td>{{ l.edicao }}</td>
                             <td>{{ l.editora }}</td>
-                            <td>{{ l.ano_publicacao }}</td>
+                            <td>{{ l.ano_publicacao | date:'d/m/Y'}} </td>
                             <td>{{ l.isbn }}</td>
                             <td>{{ l.numero_paginas}}</td>
                             <td>

@@ -1,0 +1,166 @@
+/* --- 1. CONFIGURAÇÕES GERAIS E TEMA CLARO --- */
+body {
+    background-color: #f8f9fa;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table thead {
+    background-color: #343a40;
+    color: white;
+}
+
+/* --- 2. TEMA ESCURO (DARK MODE) --- */
+body.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark .card {
+    background-color: #1e1e1e;
+    color: white;
+    border-color: #333;
+}
+
+/* Garante que o texto dentro do card fique claro */
+body.dark .card-header {
+    border-bottom: 1px solid #333;
+}
+
+body.dark .card-title,
+body.dark .card-text,
+body.dark strong {
+    color: #e0e0e0 !important;
+}
+
+body.dark table {
+    color: #4da378 !important; /* Cor verde para os dados da tabela */
+}
+
+body.dark thead {
+    background-color: #1a4d1a !important; /* Cabeçalho da tabela verde escuro */
+    color: white !important;
+}
+
+body.dark .table-striped tbody tr:nth-of-type(even) {
+    background-color: #252525;
+}
+
+body.dark .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1c1c1c;
+}
+
+body.dark a {
+    color: #4da378;
+}
+
+/* --- 3. MODAL DE DETALHES (DARK MODE) --- */
+/* Esta parte garante que a janela de informações do livro fique correta */
+body.dark .modal-content {
+    background-color: #1e1e1e;
+    color: #eaeaea;
+    border: 1px solid #444;
+}
+
+body.dark .modal-header {
+    background-color: #1a4d1a !important;
+    border-bottom: 1px solid #333;
+}
+
+body.dark .modal-footer {
+    background-color: #252525;
+    border-top: 1px solid #333;
+
+}
+
+body.dark #detalhe-titulo {
+    color: #8cff8c !important; /* Título em destaque no modal */
+}
+
+body.dark .badge-light {
+    background-color: #333;
+    color: #8cff8c !important;
+    border: 1px solid #444;
+}
+
+body.dark p i.fa-building,body.dark p i.fa-user-circle {
+    color: white !important;
+}
+
+/* --- 4. COMPONENTES E BOTÃO DE TEMA --- */
+
+/* Ajuste do Botão de Tema preso ao topo do Card */
+.card-header.position-relative {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tema-btn {
+    position: absolute;
+    top: 50%;           /* Centraliza verticalmente no header */
+    transform: translateY(-50%);
+    right: 15px;
+    z-index: 5;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+}
+
+body.dark .tema-btn {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: none;
+}
+
+/* Efeito na Capa do Livro e Área de Colar */
+img[data-bs-toggle="modal"] {
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+img[data-bs-toggle="modal"]:hover {
+    transform: scale(1.05);
+}
+
+.sem-capa {
+    width: 50px;
+    height: 75px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #6c757d;
+    border-radius: 4px;
+    border: 1px dashed #dee2e6;
+}
+
+body.dark .sem-capa {
+    background-color: #333;
+    color: #aaa;
+    border-color: #555;
+}
+
+/* Área de Paste/Upload */
+#paste-area {
+    transition: all 0.3s;
+}
+
+body.dark #paste-area {
+    background-color: #252525 !important;
+    border-color: #444 !important;
+    color: #ccc;
+}
+
+.fa-pencil-square:hover { color: #556b2f !important; }
+.fa-trash:hover { color: #b22222 !important; }
+

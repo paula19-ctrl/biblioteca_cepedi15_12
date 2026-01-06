@@ -1,115 +1,182 @@
-{% load crispy_forms_tags %}
-
-{% load widget_tweaks %}
 {% load static %}
+{% load widget_tweaks %}
+
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edição de Livros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
+
 <body>
 
-<script>
-function mudarTema() {
-    document.body.classList.toggle("dark");
 
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("tema", "dark");
-    } else {
-        localStorage.setItem("tema", "light");
-    }
-}
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2><i class="fa fa-book"></i> Edição de Livros</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-/* Aplicar tema salvo ao carregar a página */
-if (localStorage.getItem("tema") === "dark") {
-    document.body.classList.add("dark");
-}
-</script>
+                    <div class="form-row mb-3">
+                        <div class="col-md-7">
+                            <label><strong>Título:</strong></label>
+                            {{ form.titulo | add_class:"form-control" }}
+                            <small class="text-danger">{{ form.titulo.errors }}</small>
+                        </div>
+                        <div class="col-md-4">
+                            <label><strong>Autor:</strong></label>
+                            {{ form.autor | add_class:'form-control' }}
+                            <small class="text-danger">{{ form.autor.errors }}</small>
+                        </div>
+                        <div class="col-md-1">
+                            <label><strong>Edição:</strong></label>
+                            {{ form.edicao | add_class:'form-control' }}
+                        </div>
+                    </div>
 
-    <div class="row">
-        <div class="col-12"></div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h2><i class="fa fa-users"></i> Atualização de Livros</h2>
-            <div class="card-button">
-            <!-- Botão de alternar tema -->
-                <button class="tema-btn" onclick="mudarTema()">Alternar Tema</button>
+                    <div class="form-row mb-3">
+                        <div class="col-md-4">
+                            <label><strong>Editora:</strong></label>
+                            {{ form.editora | add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-3">
+                            <label><strong>Data da Publicação:</strong></label>
+                            {{ form.ano_publicacao | add_class:'form-control' | attr:"type:date" }}
+                        </div>
+                        <div class="col-md-3">
+                            <label><strong>ISBN:</strong></label>
+                            {{ form.isbn | add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-2">
+                            <label><strong>Páginas:</strong></label>
+                            {{ form.numero_paginas | add_class:'form-control' }}
+                        </div>
+                    </div>
+
+<div class="container">
+    <div class="p-3 mb-3 bg-light text-dark rounded border">
+        <label><strong>Capa do Livro:</strong></label>
+
+        <div id="paste-area" class="border rounded p-4 text-center mb-2"
+             style="border: 2px dashed #ccc !important; cursor: pointer; background: #fdfdfd; position: relative;"
+             onclick="document.getElementById('id_foto').click()">
+
+            <p id="paste-msg" class="mb-0">
+                <i class="fa fa-cloud-upload fa-2x d-block mb-2"></i>
+                Arraste uma imagem, <strong>cole (Ctrl+V)</strong> ou clique para selecionar
+            </p>
+
+            <div id="preview-container" class="d-none">
+                <img id="preview-img" src="" class="img-fluid rounded mb-2" style="max-height: 250px;">
+                <br>
+                <button type="button" class="btn btn-sm btn-danger" onclick="limparCapa(event)">
+                    <i class="fa fa-trash"></i> Remover Capa
+                </button>
             </div>
         </div>
-        <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                {{ form.titulo.errors }}
-                                <label><strong>Titulo: </strong></label>
-                                {{ form.titulo |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-4">
-                                {{ form.autor.errors }}
-                                <label><strong>Autor: </strong></label>
-                                {{ form.autor |add_class:'form-control' }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-8">
-                                {{ form.editora.errors }}
-                                <label><strong>Editora:</strong></label>
-                                {{ form.editora |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-4">
-                                {{ form.edicao.errors }}
-                                <label><strong>Edição:</strong></label>
-                                {{ form.edicao |add_class:'form-control'  }}
-                            </div>
-                            <div class="col-md-2">
-                                {{ form.ano_publicacao.erros }}
-                                <label><strong>Data de Publicação:</strong></label>
-                                {{ form.ano_publicacao |add_class:'form-control' }}
-                            </div>
-                        </div>
+        <div class="d-none">
+            {{ form.foto|add_class:"form-control-file"|attr:"id:id_foto" }}
+        </div>
+
+        <small class="text-muted">Formatos: JPG ou PNG. Você pode copiar imagens direto da internet.</small>
+    </div>
+</div>
+
+
+
+                    <div class="form-group border-top pt-3">
+                        <button type="submit" class="btn btn-success px-4">Salvar Livro</button>
+                        <a href="{% url 'livros:listar_livros' %}" class="btn btn-secondary">Voltar</a>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-3">
-                                {{ form.isbn.erros }}
-                                <label><strong>ISBN:</strong></label>
-                                {{ form.isbn  |add_class:'form-control' }}
-                            </div>
-                            <div class="col-md-2">
-                                {{ form.numero_paginas.erros }}
-                                <label><strong>Páginas:</strong></label>
-                                {{ form.numero_paginas |add_class:'form-control' }}
-                            </div>
-                <br>
-                <div class="container">
-                    <div class="p-1 mb-2 form-box">
-                        <div class="row">
-                            <div class="col-md-12">
-                               <button type="submit" class="btn btn-success">Salvar</button>
-                               <a href="{{request.META.HTTP_REFERER}}"><button type="button" class="btn btn-primary">Voltar</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
+    <script>
+        if (localStorage.getItem("tema") === "dark") {
+            document.body.classList.add("dark");
+        }
+    </script>
+
+<script>
+const fileInput = document.getElementById('id_foto');
+const pasteArea = document.getElementById('paste-area');
+const previewImg = document.getElementById('preview-img');
+const previewCont = document.getElementById('preview-container');
+const pasteMsg = document.getElementById('paste-msg');
+
+// 1. Capturar Colar (Ctrl+V)
+document.addEventListener('paste', function (e) {
+    if (e.clipboardData.items) {
+        var items = e.clipboardData.items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") !== -1) {
+                var blob = items[i].getAsFile();
+                processarArquivo(blob);
+            }
+        }
+    }
+});
+
+// 2. Capturar Seleção Manual (Clique)
+fileInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+        processarArquivo(this.files[0]);
+    }
+});
+
+// 3. Capturar Arrastar e Soltar (Drag & Drop)
+pasteArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    pasteArea.style.borderColor = "#28a745";
+});
+
+pasteArea.addEventListener('dragleave', () => {
+    pasteArea.style.borderColor = "#ccc";
+});
+
+pasteArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    pasteArea.style.borderColor = "#ccc";
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        processarArquivo(e.dataTransfer.files[0]);
+    }
+});
+
+// Função Central para Processar e Mostrar Preview
+function processarArquivo(file) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        previewImg.src = event.target.result;
+        previewCont.classList.remove('d-none');
+        pasteMsg.classList.add('d-none');
+    };
+    reader.readAsDataURL(file);
+
+    // Sincroniza com o input do Django
+    var dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    fileInput.files = dataTransfer.files;
+}
+
+// Função para Limpar
+function limparCapa(event) {
+    event.stopPropagation(); // IMPORTANTE: Impede que o clique abra o seletor de arquivos
+    fileInput.value = "";
+    previewImg.src = "";
+    previewCont.classList.add('d-none');
+    pasteMsg.classList.remove('d-none');
+}
+</script>
 
 </body>
 </html>

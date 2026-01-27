@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Biblioteca{% endblock %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h2 class="display-4"><i class="fa fa-university"></i> Biblioteca do Povão</h2>
+            <p class="lead">Bem-vindo de volta! Selecione uma das opções abaixo ou utilize o menu lateral.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-left-primary">
+                <div class="card-body text-center">
+                    <i class="fa fa-users fa-3x mb-3 text-primary"></i>
+                    <h5>Gestão de Alunos</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'alunos:inserir_aluno' %}" class="btn btn-outline-primary menu-btn">Cadastrar</a>
+                        <a href="{% url 'alunos:listar_alunos' %}" class="btn btn-primary">Listagem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-left-success">
+                <div class="card-body text-center">
+                    <i class="fa fa-book fa-3x mb-3 text-success"></i>
+                    <h5>Gestão de Livros</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'livros:inserir_livro' %}" class="btn btn-outline-success menu-btn">Inserir</a>
+                        <a href="{% url 'livros:listar_livros' %}" class="btn btn-primary">Listagem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-left-warning">
+                <div class="card-body text-center">
+                    <i class="fa fa-exchange fa-3x mb-3 text-warning"></i>
+                    <h5>Empréstimos</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'emprestimos:inserir_emprestimo' %}" class="btn btn-outline-warning menu-btn">Novo</a>
+                        <a href="{% url 'emprestimos:listar_emprestimos' %}" class="btn btn-primary ">Listagem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-left-warning">
+                <div class="card-body text-center">
+                    <i class="fa fa-folder-open fa-3x mb-3 text-warning"></i>
+                    <h5>Editoras</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'editoras:inserir_editora' %}" class="btn btn-outline-warning menu-btn">Inserir</a>
+                        <a href="{% url 'editoras:listar_editoras' %}" class="btn btn-primary ">Listagem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

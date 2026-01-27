@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sistema{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load static %}
+
+
+
+
+ <!-- bs 4
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
+
+    <!-- Bootstrap 5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS do projeto -->
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}?v={{ timestamp }}">
+    <link rel="stylesheet" href="{% static 'css/lateral.css' %}?v={{ timestamp }}">
+    <link rel="stylesheet" href="{% static 'css/usuario.css' %}?v={{ timestamp }}">
+
+    <!-- icones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<div class="layout">
+
+        {% include "core/lateral.html" %}
+
+        <div class="main-container">
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS (necessário para modal) -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- função botao tema -->
+    <script>
+function mudarTema() {
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("tema", isDark ? "dark" : "light");
+
+    atualizarBotao(isDark);
+}
+function atualizarBotao(isDark) {
+    const btn = document.getElementById("theme-toggle");
+
+        btn.innerHTML = isDark ? '<i class="fa fa-sun-o"></i> Modo Claro' : '<i class="fa fa-moon-o"></i> Modo Escuro';
+    }
+
+
+
+/* aplicar ao carregar */
+const isDark = localStorage.getItem("tema") === "dark";
+document.body.classList.toggle("dark", isDark);
+atualizarBotao(isDark);
+
+
+</script>
+
+<!-- função botao tema de usuario -->
+<script>
+const sidebarThemeBtn = document.getElementById("sidebar-user-theme-btn");
+
+if (sidebarThemeBtn) {
+  sidebarThemeBtn.addEventListener("click", () => {
+    const isUserTheme =
+      document.body.classList.contains("usuario-theme");
+
+    if (isUserTheme) {
+      // voltar para tema normal
+      document.body.classList.remove("usuario-theme");
+      localStorage.setItem("user_theme", "light");
+    } else {
+      // ativar tema do usuário
+      document.body.classList.add("usuario-theme");
+      localStorage.setItem("user_theme", "dark");
+
+      const vars = {
+        "--user-bg": localStorage.getItem("user_bg"),
+        "--card-bg": localStorage.getItem("card_bg"),
+        "--table-bg": localStorage.getItem("table_bg"),
+        "--user-text": localStorage.getItem("user_text"),
+        "--card-text": localStorage.getItem("card_text"),
+        "--lateral-text": localStorage.getItem("lateral_text"),
+        "--user-sidebar": localStorage.getItem("user_sidebar"),
+        "--user-radius": localStorage.getItem("user_radius"),
+      };
+
+      for (const key in vars) {
+        if (vars[key]) {
+          document.documentElement.style.setProperty(
+            key,
+            vars[key]
+          );
+        }
+      }
+    }
+  });
+}
+</script>
+
+<!-- telefone base -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const telefone = document.getElementById('id_telefone');
+
+    if (!telefone) return;
+
+    telefone.addEventListener('input', function () {
+        let valor = telefone.value.replace(/\D/g, '');
+
+        if (valor.length > 11) {
+            valor = valor.slice(0, 11);
+        }
+
+        if (valor.length > 6) {
+            valor = valor.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+        } else if (valor.length > 2) {
+            valor = valor.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+        } else {
+            valor = valor.replace(/^(\d*)/, '($1');
+        }
+
+        telefone.value = valor;
+    });
+});
+</script>
+
+<!-- barra lateral esconder -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.getElementById('toggle-sidebar');
+
+
+    if (!sidebar || !toggleBtn) return;
+
+    // 1️⃣ Aplicar estado salvo ao carregar
+    const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+    if (isCollapsed) {
+        sidebar.classList.add('collapsed');
+    }
+
+    // 2️⃣ Alternar sidebar e salvar estado
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+
+        const collapsed = sidebar.classList.contains('collapsed');
+        localStorage.setItem('sidebar-collapsed', collapsed);
+    });
+});
+
+    // esconder botao de tema
+
+const THEME_BTN_KEY = "showThemeButton";
+
+// estado inicial
+const showThemeBtn = localStorage.getItem(THEME_BTN_KEY) !== "false";
+document.body.classList.toggle("show-theme-btn", showThemeBtn);
+
+// mudança
+const toggleThemeBtn =
+  document.getElementById("toggle-theme-btn");
+
+if (toggleThemeBtn) {
+  toggleThemeBtn.addEventListener("change", e => {
+    const show = e.target.checked;
+    localStorage.setItem(THEME_BTN_KEY, show);
+    document.body.classList.toggle("show-theme-btn", show);
+  });
+}
+
+
+
+</script>
+
+<!-- esconder botao de tema usuario -->
+<script>
+ const USERTHEME_BTN_KEY = "showUserThemeButton";
+
+  const showUserThemeBtn =
+    localStorage.getItem(USERTHEME_BTN_KEY) === "true";
+
+  document.body.classList.toggle(
+    "show-usertheme-btn",
+    showUserThemeBtn
+  );
+</script>
+
+<!-- tema de usuario -->
+<script>
+(function () {
+    const theme = localStorage.getItem("user_theme");
+
+    if (theme === "dark") {
+        document.body.classList.add("usuario-theme");
+
+        const vars = {
+            "--user-bg": localStorage.getItem("user_bg"),
+            "--card-bg": localStorage.getItem("card_bg"),
+            "--table-bg": localStorage.getItem("table_bg"),
+            "--user-text": localStorage.getItem("user_text"),
+            "--card-text": localStorage.getItem("card_text"),
+            "--lateral-text": localStorage.getItem("lateral_text"),
+            "--user-sidebar": localStorage.getItem("user_sidebar"),
+            "--user-radius": localStorage.getItem("user_radius"),
+        };
+
+        for (const key in vars) {
+            if (vars[key]) {
+                document.documentElement.style.setProperty(key, vars[key]);
+            }
+        }
+    }
+})();
+</script>
+
+
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -5,6 +5,8 @@ from .forms import LivroForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Livro
 
+from django.http import JsonResponse
+
 def inserir_livro(request):
     template_name = 'livros/form_livro.html'
     if request.method == 'POST':
@@ -67,3 +69,8 @@ def excluir_livro(request, id):
     return render(request, template_name, context)
 
 
+def buscar_livros(request):
+    termo = request.GET.get('q', '')
+    livros = Livro.objects.filter(titulo__icontains=termo)[:10]
+    resultados = [{'id': l.id, 'text': l.titulo} for l in livros]  # text aqui
+    return JsonResponse(resultados, safe=False)

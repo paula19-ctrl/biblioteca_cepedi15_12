@@ -4,6 +4,7 @@ from apps.core.views import index
 
 urlpatterns = [
     path('', index, name='index'),
+    path('', include('apps.core.urls')),
     path('index/', include("apps.core.urls")),
     path('alunos/', include('apps.alunos.urls', namespace='alunos')),
     path('livros/', include('apps.livros.urls', namespace='livros')),

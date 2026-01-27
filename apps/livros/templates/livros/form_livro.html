@@ -1,18 +1,8 @@
-{% load static %}
+{% extends 'core/base.html' %}
 {% load widget_tweaks %}
+{% block title %}Cadastro de Livros{% endblock %}
 
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Livros</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-</head>
-
-<body>
+{% block content %}
 
 
     <div class="container mt-4">
@@ -44,7 +34,8 @@
                     <div class="form-row mb-3">
                         <div class="col-md-4">
                             <label><strong>Editora:</strong></label>
-                            {{ form.editora | add_class:'form-control' }}
+                            <input type="text" id="id_editora" name="editora" class="form-control" placeholder="Digite o nome da editora">
+                            <input type="hidden" id="id_editora_id" name="editora_id">
                         </div>
                         <div class="col-md-3">
                             <label><strong>Data da Publicação:</strong></label>
@@ -178,5 +169,33 @@ function limparCapa(event) {
 }
 </script>
 
-</body>
-</html>
+<script>
+$(function() {
+    $("#id_editora").autocomplete({
+        source: function(request, response) {
+            $.getJSON("{% url 'editoras:buscar_editoras' %}", { q: request.term }, function(data) {
+                response($.map(data, function(item) {
+                    return {
+                        label: item.text, // nome que aparece para o usuário
+                        value: item.text, // o que vai aparecer no input
+                        id: item.id       // id real da editora
+                    };
+                }));
+            });
+        },
+        minLength: 2,  // começa a buscar após 2 caracteres
+        select: function(event, ui) {
+            // salva o ID real no campo oculto
+            $("#id_editora_id").val(ui.item.id);
+        },
+        change: function(event, ui) {
+            // se limpar ou digitar algo não existente, limpa o hidden
+            if (!ui.item) {
+                $("#id_editora_id").val("");
+            }
+        }
+    });
+});
+</script>
+
+{% endblock %}

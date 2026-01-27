@@ -5,6 +5,7 @@ from .forms import EmprestimoForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Emprestimo
 from .models import Aluno
+from .models import Livro
 
 
 def inserir_emprestimo(request):
@@ -76,3 +77,27 @@ def aluno_emprestimo(request, id):
         'aluno_id': id,
     }
     return render(request, template_name, context)
+
+def criar_emprestimo(request, livro_id=None):
+    livro = None
+
+    if livro_id:
+        livro = get_object_or_404(Livro, id=livro_id)
+
+    if request.method == 'POST':
+        form = EmprestimoForm(request.POST)
+        if form.is_valid():
+            emprestimo = form.save(commit=False)
+
+            # pega o livro pelo hidden
+            emprestimo.livro_id_id = request.POST.get('livro_id')
+
+            emprestimo.save()
+            return redirect('emprestimos:listar_emprestimos')
+    else:
+        form = EmprestimoForm()
+
+    return render(request, 'emprestimos/form_emprestimo.html', {
+        'form': form,
+        'livro': livro
+    })

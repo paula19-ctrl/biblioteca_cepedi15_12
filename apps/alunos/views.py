@@ -4,8 +4,10 @@ from .forms import AlunoForm
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Aluno
-
 from django.db.models.functions import Lower
+
+from django.http import JsonResponse
+
 
 def inserir_aluno(request):
     template_name = 'alunos/form_aluno.html'
@@ -68,3 +70,10 @@ def excluir_aluno(request, id):
         messages.error(request, 'O Aluno foi excluído com sucesso!')
         return redirect('alunos:listar_alunos')
     return render(request, template_name, context)
+
+
+def buscar_alunos(request):
+    termo = request.GET.get('q', '')
+    alunos = Aluno.objects.filter(nome__icontains=termo)[:10]
+    resultados = [{'id': a.id, 'text': a.nome} for a in alunos]  # text aqui
+    return JsonResponse(resultados, safe=False)

@@ -1,0 +1,290 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Configuração{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+
+    <section class="settings">
+            <div class="card-header">
+                <h2><i class="fa fa-cog"></i> configurações</h2>
+            </div>
+        <!-- CONTA -->
+        <section class="settings-section">
+            <h3>Conta</h3>
+
+            <div class="settings-card">
+                <div class="settings-item">
+                    <span>Email</span>
+                    <button class="btn-outline">Alterar</button>
+                </div>
+
+                <div class="settings-item">
+                    <span>Senha</span>
+                    <button class="btn-outline">Alterar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- APARÊNCIA -->
+        <section class="settings-section">
+            <h3>Aparência</h3>
+
+            <div class="settings-card">
+                <div class="settings-item">
+                    <span>Tema</span>
+                    <div class="theme-switch">
+                        <button data-theme="light" class="theme-btn">Padrao</button>
+                        <button data-theme="dark" class="theme-btn active">Configurar</button>
+                    </div>
+                </div>
+
+                <!-- OPÇÕES DO TEMA ESCURO -->
+                <div id="dark-options" class="theme-options">
+                    <div class="settings-item">
+                        <span>Cor de fundo</span>
+                        <input type="color" id="bgPicker">
+                        <input type="color" id="bgcardPicker">
+                    </div>
+                    <div class="settings-item">
+                        <span>Cor de listagem</span>
+                        <input type="color" id="tablePicker">
+                        <input type="color" id="cardtextPicker">
+                    </div>
+
+                    <div class="settings-item">
+                        <span>Cor do texto</span>
+                        <input type="color" id="textPicker">
+                        <input type="color" id="lateraltextPicker">
+
+                    </div>
+
+                    <div class="settings-item">
+                        <span>Cor da lateral</span>
+                        <input type="color" id="sidebarPicker">
+                    </div>
+
+                    <div class="settings-item">
+                        <span>Raio dos cards</span>
+                        <input type="range" id="radiusPicker" min="0" max="30">
+                    </div>
+                </div>
+            </div>
+            <section class="settings-section">
+                <div  class="settings-item">
+                    <span>Botao de tema</span>
+                        <div class="theme-switch">
+                        <button id="toggle-theme-btn"
+                                class="esconder-theme-btn botao-ativado"
+                                data-storage="showThemeButton"></button>
+                        </div>
+                </div>
+                <section class="settings-section">
+                <div  class="settings-item">
+                    <span>Botao de tema personalizado</span>
+                        <div class="theme-switch">
+                        <button id="toggle-usuario-btn"
+                                class="esconder-theme-btn botao-ativado"
+                                >Ativado</button>
+                        </div>
+                </div>
+                </section>
+            </section>
+        </section>
+    </section>
+</div>
+
+<!-- JS DA PÁGINA DE CONFIGURAÇÃO -->
+<script>
+const bgPicker = document.getElementById("bgPicker");
+const bgcardPicker = document.getElementById("bgcardPicker");
+const tablePicker = document.getElementById("tablePicker");
+const textPicker = document.getElementById("textPicker");
+const cardtextPicker = document.getElementById("cardtextPicker");
+const lateraltextPicker = document.getElementById("lateraltextPicker");
+const sidebarPicker = document.getElementById("sidebarPicker");
+const radiusPicker = document.getElementById("radiusPicker");
+const themeBtns = document.querySelectorAll(".theme-btn");
+const darkOptions = document.getElementById("dark-options");
+
+/* ===== TEMA CLARO / ESCURO ===== */
+themeBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        themeBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const theme = btn.dataset.theme;
+        localStorage.setItem("user_theme", theme);
+
+        darkOptions.style.display = theme === "dark" ? "block" : "none";
+        document.body.classList.toggle("usuario-theme", theme === "dark");
+    });
+});
+
+/* ===== CORES ===== */
+bgPicker.addEventListener("input", e => {
+    localStorage.setItem("user_bg", e.target.value);
+    document.documentElement.style.setProperty("--user-bg", e.target.value);
+});
+bgcardPicker.addEventListener("input", e => {
+    localStorage.setItem("card_bg", e.target.value);
+    document.documentElement.style.setProperty("--card-bg", e.target.value);
+});
+tablePicker.addEventListener("input", e => {
+    localStorage.setItem("table_bg", e.target.value);
+    document.documentElement.style.setProperty("--table-bg", e.target.value);
+});
+
+textPicker.addEventListener("input", e => {
+    localStorage.setItem("user_text", e.target.value);
+    document.documentElement.style.setProperty("--user-text", e.target.value);
+});
+cardtextPicker.addEventListener("input", e => {
+    localStorage.setItem("card_text", e.target.value);
+    document.documentElement.style.setProperty("--card-text", e.target.value);
+});
+
+lateraltextPicker.addEventListener("input", e => {
+    localStorage.setItem("lateral_text", e.target.value);
+    document.documentElement.style.setProperty("--lateral-text", e.target.value);
+});
+
+sidebarPicker.addEventListener("input", e => {
+    localStorage.setItem("user_sidebar", e.target.value);
+    document.documentElement.style.setProperty("--user-sidebar", e.target.value);
+});
+
+radiusPicker.addEventListener("input", e => {
+    const val = e.target.value + "px";
+    localStorage.setItem("user_radius", val);
+    document.documentElement.style.setProperty("--user-radius", val);
+});
+
+/* ===== CARREGAR AO ABRIR ===== */
+window.addEventListener("DOMContentLoaded", () => {
+    const theme = localStorage.getItem("user_theme") || "dark";
+
+    document.querySelector(`[data-theme="${theme}"]`)?.click();
+
+    bgPicker.value = localStorage.getItem("user_bg") || "#121212";
+    bgcardPicker.value = localStorage.getItem("card_bg") || "#0e0f0f";
+    tablePicker.value = localStorage.getItem("table_bg") || "#1b1d1f";
+    textPicker.value = localStorage.getItem("user_text") || "#ffffff";
+    cardtextPicker.value = localStorage.getItem("card_text") || "#ffffff";
+    lateraltextPicker.value = localStorage.getItem("lateral_text") || "#ffffff";
+    sidebarPicker.value = localStorage.getItem("user_sidebar") || "#1b1b1b";
+    radiusPicker.value = parseInt(localStorage.getItem("user_radius")) || 10;
+
+    document.documentElement.style.setProperty("--user-bg", bgPicker.value);
+    document.documentElement.style.setProperty("--card-bg", bgcardPicker.value);
+    document.documentElement.style.setProperty("--table-bg", tablePicker.value);
+    document.documentElement.style.setProperty("--user-text", textPicker.value);
+    document.documentElement.style.setProperty("--card-text", cardtextPicker.value);
+    document.documentElement.style.setProperty("--lateral-text", lateraltextPicker.value);
+    document.documentElement.style.setProperty("--user-sidebar", sidebarPicker.value);
+    document.documentElement.style.setProperty("--user-radius", radiusPicker.value + "px");
+});
+</script>
+
+<!-- função do botao esconder tema -->
+<script>
+   const THEME_BTN_KEY = "showThemeButton";
+const toggleBtn = document.getElementById("toggle-theme-btn");
+
+// estado inicial
+const showThemeBtn = localStorage.getItem(THEME_BTN_KEY) !== "false";
+document.body.classList.toggle("show-theme-btn", showThemeBtn);
+
+// texto inicial do botão (se existir)
+if (toggleBtn) {
+  toggleBtn.textContent = showThemeBtn
+    ? "Ativado"
+    : "Desativado";
+
+
+
+  toggleBtn.addEventListener("click", () => {
+    const show = !document.body.classList.contains("show-theme-btn");
+
+
+
+    localStorage.setItem(THEME_BTN_KEY, show);
+    document.body.classList.toggle("show-theme-btn", show);
+
+    toggleBtn.textContent = show
+      ? "Ativado"
+      : "Desativado";
+
+
+      // ATUALIZA O VISUAL
+  toggleBtn.classList.toggle(
+    "active",
+    localStorage.getItem(THEME_BTN_KEY) === "false"
+  );
+  });
+
+
+
+}
+
+</script>
+
+<!-- função do botao esconder tema usuario -->
+<script>
+const USERTHEME_BTN_KEY = "showUserThemeButton";
+const toggleUsuarioBtn = document.getElementById("toggle-usuario-btn");
+
+// ===== ESTADO INICIAL (IGUAL AO BOTÃO NORMAL) =====
+const showUserThemeBtn =
+  localStorage.getItem(USERTHEME_BTN_KEY) === "true";
+
+// APLICA A CLASSE NO BODY AO CARREGAR
+document.body.classList.toggle(
+  "show-usertheme-btn",
+  showUserThemeBtn
+);
+
+if (toggleUsuarioBtn) {
+  // TEXTO INICIAL
+  toggleUsuarioBtn.textContent =
+    showUserThemeBtn ? "Ativado" : "Desativado";
+
+  toggleUsuarioBtn.classList.toggle(
+    "botao-ativado",
+    showUserThemeBtn
+  );
+
+  toggleUsuarioBtn.addEventListener("click", () => {
+    const show =
+      !document.body.classList.contains("show-usertheme-btn");
+
+    localStorage.setItem(USERTHEME_BTN_KEY, show);
+    document.body.classList.toggle(
+      "show-usertheme-btn",
+      show
+    );
+
+    toggleUsuarioBtn.textContent =
+      show ? "Ativado" : "Desativado";
+
+    toggleUsuarioBtn.classList.toggle(
+      "botao-ativado",
+      show
+    );
+  });
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".botao-ativado").forEach(btn => {
+    const key = btn.dataset.storage;
+    if (!key) return;
+
+    const isActive = localStorage.getItem(key) === "false";
+    btn.classList.toggle("active", isActive);
+  });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,196 @@
+/* configuracao */
+
+
+.settings h2 {
+    margin-bottom: 20px;
+}
+
+.settings-section {
+    margin-bottom: 30px;
+    margin-top: 15px;
+
+}
+
+.settings-section h3 {
+    font-size: 15px;
+    opacity: .8;
+    margin-bottom: 10px;
+}
+
+.settings-card {
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    outline: 3px solid rgba(255,255,255,.16);
+    outline-offset: -3px;
+    background:linear-gradient(
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.15)
+    ) ;
+
+}
+
+
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #444;
+    color: inherit;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border-color: inherit;
+
+}
+
+.theme-switch {
+    display: flex;
+    gap: 6px;
+}
+
+.theme-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: transparent;
+    color: inherit;
+    border-color: inherit;
+
+}
+.esconder-theme-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: transparent;
+    color: inherit;
+    border-color: inherit;
+
+}
+
+.theme-btn.active {
+    background: linear-gradient(
+      rgba(0,0,0,.15)
+    );
+}
+
+body.dark .theme-btn.active {
+    background: linear-gradient(
+      rgba(255,255,255,.15)
+    );
+}
+
+.botao-ativado.active {
+    background: linear-gradient(
+        rgba(0,0,0,.15)
+    );
+}
+
+body.dark .botao-ativado.active {
+    background: linear-gradient(
+        rgba(255,255,255,.15)
+    );
+}
+
+
+.theme-options {
+    padding-top: 10px;
+}
+
+
+
+
+    /* variáveis do usuário (vazias por padrão) */
+
+
+body.usuario-theme {
+    background-color: var(--user-bg);
+    color: var(--user-text);
+}
+
+.usuario-theme .main-container {
+    background-color: color-mix(
+    in srgb,
+    var(--user-bg),
+    black 50%
+);
+}
+
+
+.usuario-theme .card {
+    background-color: var(--card-bg);
+    color: var(--user-text);
+}
+.usuario-theme .form-box {
+    background-color: var(--table-bg);
+    color: var(--card-text);
+
+}
+body.usuario-theme .table {
+    --bs-table-bg: var(--table-bg);
+    --bs-table-color: var(--card-text);
+    --bs-table-striped-color: var(--card-text);
+    --bs-table-striped-bg: color-mix(in srgb, var(--table-bg), black 25%);
+    --bs-border-color: var(--card-text);
+}
+
+.usuario-theme .sidebar,.usuario-theme .sidebar-toggle,.usuario-theme .nav-link,.usuario-theme .menu-secao {
+    background-color: var(--user-sidebar);
+
+    color: var(--lateral-text);
+
+}
+.usuario-theme .sidebar-header, .usuario-theme .sidebar-header a {
+    background-color: color-mix(
+    in srgb,
+    var(--user-sidebar),
+    black 50%
+);
+    color: var(--user-text);
+}
+
+.usuario-theme .settings-card {
+    background-color: color-mix(
+    in srgb,
+    var(--card-bg),
+    black 50%);
+}
+
+.usuario-theme .settings-item {
+    background-color: var(--card-bg);
+}
+
+
+.usuario-theme .settings {
+    background-color: color-mix(
+    in srgb,
+    var(--card-bg),
+    black 50%);
+}
+
+.usuario-theme .nav-link:hover {
+    background-color: color-mix(
+    in srgb,
+    var(--user-sidebar),
+    black 50%);
+
+    color: color-mix(
+    in srgb,
+    var(--lateral-text),
+    white 15%);
+
+    text-decoration-line: underline;
+    text-decoration-color: inherit;
+}

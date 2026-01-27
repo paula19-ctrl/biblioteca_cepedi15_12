@@ -1,4 +1,3 @@
-
 .titulo-livro {
     max-width: 300px;        /* OBRIGATÓRIO */
     white-space: nowrap;    /* força 1 linha */
@@ -45,13 +44,22 @@ img[data-bs-toggle="modal"]:hover {
     border-radius: 4px;
     border: 1px dashed #dee2e6;
 }
-#nomeLivroModal {
-    color: #131313;
-
+body.dark .sem-capa {
+    background-color: #333;
+    color: #aaa;
+    border-color: #555;
 }
 
+/* Área de Paste/Upload */
+#paste-area {
+    transition: all 0.3s;
+}
 
-
+body.dark #paste-area {
+    background-color: #252525 !important;
+    border-color: #444 !important;
+    color: #ccc;
+}
 /* Tema padrão */
 /* cor do fundo real */
 body {
@@ -106,33 +114,23 @@ a:hover {
     padding: 6px 12px;
 
 }
-
-
-
-
 /* cor botao biblioteca */
 .menu-btn {
 
     background-color: #bfbfbf;
     color: #131313;
-    border: 2px solid ;
+    border: none;
     border-radius: 6px;
     padding: 6px 12px;
     btn-hover-color: #131313;
 
 }
-.menu-btn:hover{
-    text-decoration: none;
-    border-color: black;
-    color: black;
-}
 
 /* cor botao voltar */
-.btn.btn-primary, .btn-primary:hover {
+.btn.btn-primary {
   --bs-btn-bg: #121212;
   --bs-btn-border-color: #8c8c8c;
   --bs-btn-color: #fff;
-    text-decoration: none;
 
   --bs-btn-hover-bg: #1f1f1f;
   --bs-btn-hover-border-color: #8c8c8c;
@@ -169,7 +167,6 @@ body.dark {
     background-color: #121212;
     color: white;
     transition: 0.3s;
-
 }
 
 body.dark .card {
@@ -177,18 +174,26 @@ body.dark .card {
     color: #e5e9f0;
 }
 
-
+/* cor da tabela */
 body.dark .table {
-    --bs-table-color: #4da378;
+    --bs-table-color: #80ed58;
     --bs-border-color: #2f2f2;
     --bs-table-bg: #131313;
-    --bs-table-striped-bg: #272727;
-    --bs-table-striped-color: #4da378;
+    /* cor das faixas entre cada coiso */
+    --bs-table-striped-bg: #232024;
+    --bs-table-striped-color: #80ed58;
+
     --bs-table-hover-bg: #333;
-    --bs-table-hover-color: #4da378;
+    --bs-table-hover-color: #80ed58;
 }
 
-/* cor do form livro */
+/* cor do q ta no titulo */
+body.dark .table > thead {
+    --bs-table-bg: #36c998;
+    --bs-table-color: black;
+}
+
+/* cor do form (cadastro) */
 body.dark .form-box {
     background-color: #2a2a2a;
     color: #4da378;
@@ -196,45 +201,41 @@ body.dark .form-box {
 }
 body.dark .form-control {
     background-color: #3e3e3e;
-    border-color: #4da378;
+    border-color: #80ed58;
     color: #a7cfbb;
-
-}
-body.dark .form-control::placeholder,body.dark .fa-search {
-    color: #a7cfbb;
-
-}
-.fa-search{
-    color: gray;
 }
 body.dark .form-control:focus {
     background-color: #2a2a2a;
     color: #a7cfbb;
-    border-color: #4da378;
+    border-color: #80ed58;
     box-shadow: 0 0 0 .15rem #4da37855 ;
 }
 
+/* cor botao tema */
 body.dark .tema-btn {
     background-color: #cdcdcd;
     color: black;
-
 }
 
 /* cor site excluir */
 body.dark.pagina-excluir h5,
 body.dark.pagina-excluir .card-title {
-    color: #4da378;
+    color: #80ed58;
     background-color: #1e1e1e;
 }
-
+/* cor de link */
 body.dark .table a:hover {
     text-decoration-line: underline;
-    text-decoration-color: #4da378;
+    text-decoration-color: #db1828;
     text-decoration-thickness: 2px;
 }
 
 body.dark td a {
     text-decoration: none;
-    color: inherit;
+    color: #db1828;
 }
 
+/* cor da lupinha */
+body.dark a i.fa-search {
+    color: #8cff8c !important; /* verde claro no escuro */
+}
